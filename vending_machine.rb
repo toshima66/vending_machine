@@ -1,8 +1,8 @@
 class VendingMachine
-  DRINK_LIST = {
-    オレンジジュース: 120,
-    ビール: 230
-  }
+  DRINK_LIST = [
+    { name: "オレンジジュース", price: 120 },
+    { name: "ビール", price: 230 }
+  ]
 
   def execute
     # 処理開始
@@ -12,10 +12,10 @@ class VendingMachine
     list()
 
     # 商品を選択
-    select()
+    selected = select()
 
     # 金額を入力
-    put_coins()
+    put_coins(selected)
 
     # 終了処理
     puts 'ありがとうございました'
@@ -23,7 +23,9 @@ class VendingMachine
 
   def list
     # 一覧表示
-    puts "#{DRINK_LIST}"
+    DRINK_LIST.each_with_index{|drink, index|
+      puts "#{index}: #{drink[:name]} - #{drink[:price]}"
+    }
   end
 
   def select
@@ -34,11 +36,21 @@ class VendingMachine
     puts "#{str}"
 
     #入力値から商品選択
-    #選択できたら商品を出力
+    selected = DRINK_LIST[str.to_i]
 
-    #
+    #アカン場合は再入力
+    select() if selected.nil?
+
+    #選択できたら商品を出力
+    puts "#{selected[:name]}ですね"
+
+    return selected
   end
 
+  def put_coins(drink)
+    puts "#{drink[:name]}は#{drink[:price]}になります"
+
+  end
 end
 
-VendingMachine.new.start()
+VendingMachine.new.execute()
