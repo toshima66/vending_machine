@@ -50,6 +50,13 @@ class VendingMachine
   def put_coins(drink)
     puts "#{drink[:name]}は#{drink[:price]}になります"
 
+    puts "投入金額を入力してください"
+
+    str = gets.to_i
+
+    put_coins(drink) if str < drink[:price]
+
+    puts "#{drink[:price]} お預りしました。"
   end
 end
 
