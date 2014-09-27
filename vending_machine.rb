@@ -15,9 +15,11 @@ class VendingMachine
     selected = select()
 
     # 金額を入力
-    put_coins(selected)
+    coins = put_coins(selected)
 
     # 終了処理
+    puts "#{selected[:name]} をお受け取り下さい"
+    puts "お釣りは#{coins - selected[:price]}"
     puts 'ありがとうございました'
   end
 
@@ -39,7 +41,7 @@ class VendingMachine
     selected = DRINK_LIST[str.to_i]
 
     #アカン場合は再入力
-    select() if selected.nil?
+    return select() if selected.nil?
 
     #選択できたら商品を出力
     puts "#{selected[:name]}ですね"
@@ -54,9 +56,14 @@ class VendingMachine
 
     str = gets.to_i
 
-    put_coins(drink) if str < drink[:price]
+    return put_coins(drink) if str < drink[:price]
 
     puts "#{drink[:price]} お預りしました。"
+
+    return str
+  end
+
+  def change
   end
 end
 
